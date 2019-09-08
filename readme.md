@@ -13,3 +13,21 @@ Create an api that takes a string as input and returns a list of text insights f
 
 ## Technical details
 Python version: 2.7
+
+## Quickstart guidelines
+
+### Question C
+
+#### Startup
+- Install all the required Python packages
+- Start the Flask localhost server by running 'search_api.py'
+- Go to e.g. http://127.0.0.1:5000/search?query=python
+
+#### Arguments
+- query: the query to search in Google
+- max_pages, max_insights: maximum numbers of web pages to scrape and insights to extract
+- output_format: html or json
+
+Example: http://127.0.0.1:5000/search?query=how%20to%20code&max_pages=5&max_insights=3&output_format=html
+
+Note: you can edit 'config.py' to change the api key and Custom Google Engine ID.

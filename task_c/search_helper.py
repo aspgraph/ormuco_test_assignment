@@ -29,8 +29,8 @@ def get_synonyms_antonyms(keywords):
             synonyms.extend([l.name() for l in cur_lemmas])
             antonyms.extend([a.name() for a in l.antonyms() for l in cur_lemmas])
 
-    synonyms = set(synonyms) - keywords
-    antonyms = set(antonyms) - keywords - synonyms
+    synonyms = set([s.lower() for s in synonyms if s.find('_') == -1]) - keywords
+    antonyms = set([a.lower() for a in antonyms if a.find('_') == -1]) - keywords - synonyms
     return synonyms, antonyms
 
 
@@ -57,7 +57,6 @@ def __rate_paragraph(words, processor, num_links):
 
 # Extract paragraphs from a BeautifulSoup HTML block
 def __extract_paragraphs(div_soup, processor):
-    lower_keywords = [k.lower() for k in processor.keywords]
     # Let's define paragraphs as pieces of text inside a div or a p HTML block
     tags = div_soup.find_all(['div', 'p'])
     filtered_tags = []
@@ -75,7 +74,7 @@ def __extract_paragraphs(div_soup, processor):
         if text == u'':
             continue
         words = set([w.lower() for w in re.findall(r'\w+', text)])
-        rating = __rate_paragraph(words, lower_keywords, processor.synonyms, processor.antonyms, num_links)
+        rating = __rate_paragraph(words, processor, num_links)
         if rating > 0:
             filtered_tags.append((rating, tag))
     filtered_tags.sort(reverse=True)

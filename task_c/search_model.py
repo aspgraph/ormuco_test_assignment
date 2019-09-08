@@ -15,7 +15,7 @@ class RequestProcessor(object):
     # Class constructor
     def __init__(self, query, max_pages, max_insights, output_format):
         self.query = query
-        self.keywords = set(query.split(' '))
+        self.keywords = set([k.lower() for k in query.split(' ')])
         self.synonyms, self.antonyms = search_helper.get_synonyms_antonyms(self.keywords)
         self.max_pages = max_pages
         self.max_insights = max_insights
